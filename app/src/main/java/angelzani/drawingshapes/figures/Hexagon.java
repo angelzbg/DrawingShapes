@@ -74,4 +74,11 @@ public class Hexagon extends Figure {
         this.setBackground(bmpDrawable);
     }
 
+    @Override
+    public void drawShape(int coordX, int coordY, int diameter, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawHexagon(coordX, coordY, diameter, fillColor, strokeWidth, strokeColor);
+    }
+
+    @Override
+    public void drawShape(int int1, int int2, int int3, int int4, String str1, int int5, String str2) { }
 }

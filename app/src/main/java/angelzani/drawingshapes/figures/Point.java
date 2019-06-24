@@ -38,4 +38,11 @@ public class Point extends Figure {
         this.setBackground(gradientDrawable);
     }
 
+    @Override
+    public void drawShape(int coordX, int coordY, int thickness, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawPoint(coordX, coordY, thickness, fillColor, strokeWidth, strokeColor);
+    }
+
+    @Override
+    public void drawShape(int int1, int int2, int int3, int int4, String str1, int int5, String str2) { }
 }

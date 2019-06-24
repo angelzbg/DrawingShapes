@@ -883,25 +883,59 @@ public class MainActivity extends AppCompatActivity {
         IV_Stroke_8c8c8c.setOnClickListener(selectStrokeColor);
 
         //Figures
-            //Points
-        IV_Point.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener createFigureClicker = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Figure figure = new angelzani.drawingshapes.figures.Point(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
+                Figure figure;
+                switch (v.getId()){
+                    case R.id.IV_Point:
+                        figure = new angelzani.drawingshapes.figures.Point(getApplicationContext()); break;
+                    case R.id.IV_Line:
+                        figure = new Line(getApplicationContext()); break;
+                    case R.id.IV_Circle:
+                        figure = new Circle(getApplicationContext()); break;
+                    case R.id.IV_Square:
+                        figure = new Rectangle(getApplicationContext()); break;
+                    case R.id.IV_Triangle:
+                        figure = new Triangle(getApplicationContext()); break;
+                    case R.id.IV_Oval:
+                        figure = new Oval(getApplicationContext()); break;
+                    case R.id.IV_Pentagon:
+                        figure = new Pentagon(getApplicationContext()); break;
+                    case R.id.IV_Hexagon:
+                        figure = new Hexagon(getApplicationContext()); break;
+                    case R.id.IV_Triangle_Prav:
+                        figure = new TrianglePrav(getApplicationContext()); break;
+                    default:
+                        figure = new Izpit(getApplicationContext()); break;
                 }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
+
+                addFigureToPaneLayout(figure);
 
                 figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((angelzani.drawingshapes.figures.Point) figure).drawPoint(widthPane/2, heightPane/2, height/48, figure.fillColor, 0, figure.strokeColor);
-
+                switch (figure.type){
+                    // 1 = Point; 2 = Line; 3 = Circle; 4 = Square; 5 = Triangle; 6 = Oval; 7 = Pentagon; 8 = Hexagon; 9 = TrianglePrav; 10 = Изпитна фигура
+                    case 1:
+                        figure.drawShape(widthPane/2, heightPane/2, height/48, figure.fillColor, 0, figure.strokeColor); break;
+                    case 2:
+                        figure.drawShape(widthPane/2-width/6, heightPane/2, width/3, height/160, figure.fillColor, 0, figure.strokeColor); break;
+                    case 3:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/8, width/4, figure.fillColor, 0, figure.strokeColor); break;
+                    case 4:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, figure.fillColor, 0, figure.strokeColor); break;
+                    case 5:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/8, width/4, figure.fillColor, 0, figure.strokeColor); break;
+                    case 6:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/12, width/4, width/6, figure.fillColor, 0, figure.strokeColor); break;
+                    case 7:
+                        figure.drawShape(widthPane/2-width/6, widthPane/2-width/6, width/6,  figure.fillColor, 0, figure.strokeColor); break;
+                    case 8:
+                        figure.drawShape(widthPane/2-width/6, widthPane/2-width/6, width/6,  figure.fillColor, 0, figure.strokeColor); break;
+                    case 9:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, "#000000", 0, "#000000"); break;
+                    default:
+                        figure.drawShape(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, figure.fillColor, width/64, figure.strokeColor); break;
+                }
                 figure.setOnTouchListener(moveFigure);
                 figure.setOnClickListener(figureClicker);
 
@@ -910,258 +944,18 @@ public class MainActivity extends AppCompatActivity {
                 updateFiguresList();
                 updatePreviews();
             }
-        });
-            //Lines
-        IV_Line.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        };
 
-                Figure figure = new Line(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Line) figure).drawLine(widthPane/2-width/6, heightPane/2, width/3, height/160, figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Circles
-        IV_Circle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Circle(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Circle) figure).drawCircle(widthPane/2-width/8, heightPane/2-width/8, width/4, figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Rectangles
-        IV_Square.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Rectangle(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Rectangle) figure).drawRectangle(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Triangles
-        IV_Triangle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Triangle(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Triangle) figure).drawTriangle(widthPane/2-width/8, heightPane/2-width/8, width/4, figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Ovals/Ellipses
-        IV_Oval.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Oval(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Oval) figure).drawOval(widthPane/2-width/8, heightPane/2-width/12, width/4, width/6, figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Pentagon
-        IV_Pentagon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Pentagon(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Pentagon) figure).drawPentagon(widthPane/2-width/6, widthPane/2-width/6, width/6,  figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Hexagon
-        IV_Hexagon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new Hexagon(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Hexagon) figure).drawHexagon(widthPane/2-width/6, widthPane/2-width/6, width/6,  figure.fillColor, 0, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            //Triangle pravougulen
-        IV_Triangle_Prav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Figure figure = new TrianglePrav(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((TrianglePrav) figure).drawTrianglePrav(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, "#000000", 0, "#000000");
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
-            // Изпитна глупост
-        IV_Izpit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Figure figure = new Izpit(getApplicationContext());
-                windows[windowPointer].figures.add(figure);
-                figure.setId(View.generateViewId());
-
-                if(windowPointer==0) { //намираме се в прозорец 1
-                    CL_Window1.addView(figure);
-                }
-                else { //намираме се в прозорец 2
-                    CL_Window2.addView(figure);
-                }
-
-                figure.title = "Figure" + windows[windowPointer].figures.size();
-                ((Izpit) figure).drawIzput(widthPane/2-width/8, heightPane/2-width/8, width/4, width/4, figure.fillColor, width/64, figure.strokeColor);
-
-                figure.setOnTouchListener(moveFigure);
-                figure.setOnClickListener(figureClicker);
-
-                figure.performClick();
-
-                updateFiguresList();
-                updatePreviews();
-            }
-        });
+        IV_Point.setOnClickListener(createFigureClicker);
+        IV_Line.setOnClickListener(createFigureClicker);
+        IV_Circle.setOnClickListener(createFigureClicker);
+        IV_Square.setOnClickListener(createFigureClicker);
+        IV_Triangle.setOnClickListener(createFigureClicker);
+        IV_Oval.setOnClickListener(createFigureClicker);
+        IV_Pentagon.setOnClickListener(createFigureClicker);
+        IV_Hexagon.setOnClickListener(createFigureClicker);
+        IV_Triangle_Prav.setOnClickListener(createFigureClicker);
+        IV_Izpit.setOnClickListener(createFigureClicker);
 
         //Figure Settings CLOSE button
         B_FigSet_CLOSE.setOnClickListener(new View.OnClickListener() {
@@ -1483,7 +1277,7 @@ public class MainActivity extends AppCompatActivity {
         switch(current_selected.type) {
             case 1: //Point
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((angelzani.drawingshapes.figures.Point) current_selected).drawPoint(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_X.getText().toString()),
                         Integer.parseInt(ET_FigSet_Y.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1494,7 +1288,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2: //Line
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Line) current_selected).drawLine(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1507,7 +1301,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 3: //Circle
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Circle) current_selected).drawCircle(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1518,7 +1312,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4: //Rectangle
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Rectangle) current_selected).drawRectangle(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1531,7 +1325,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 5: //Triangle
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Triangle) current_selected).drawTriangle(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1543,7 +1337,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 6: //Oval/елипса
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Oval) current_selected).drawOval(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1556,7 +1350,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 7: //Pentagon
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Pentagon) current_selected).drawPentagon(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1568,7 +1362,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 8: //Hexagon
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Hexagon) current_selected).drawHexagon(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1580,7 +1374,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 9: //Triangle (правоъгълен)
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((TrianglePrav) current_selected).drawTrianglePrav(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1593,7 +1387,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 10: // изпитна
                 current_selected.title = ET_FigSet_Title.getText().toString();
-                ((Izpit) current_selected).drawIzput(
+                current_selected.drawShape(
                         Integer.parseInt(ET_FigSet_START.getText().toString()),
                         Integer.parseInt(ET_FigSet_TOP.getText().toString()),
                         Integer.parseInt(ET_FigSet_Width.getText().toString()),
@@ -1613,130 +1407,86 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             // 1 = Point; 2 = Line; 3 = Circle; 4 = Square; 5 = Triangle; 6 = Oval; 7 = Pentagon; 8 = Hexagon; 9 = Triangle Pravougulenl; 10 = Izpit
             int X = (int) current_selected.getX(), Y = (int) current_selected.getY();
-            Figure figure = null;
+            Figure figure;
             switch(current_selected.type) {
                 case 1: //Point
                     figure = new angelzani.drawingshapes.figures.Point(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((angelzani.drawingshapes.figures.Point) figure).drawPoint(X+current_selected.getLayoutParams().width/2, Y+current_selected.getLayoutParams().width/2, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X+current_selected.getLayoutParams().width/2, Y+current_selected.getLayoutParams().width/2, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     break;
                 case 2: //Line
                     figure = new Line(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Line) figure).drawLine(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 3: //Circle
                     figure = new Circle(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Circle) figure).drawCircle(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     break;
                 case 4: //Rectangle
                     figure = new Rectangle(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Rectangle) figure).drawRectangle(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 5: //Triangle
                     figure = new Triangle(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Triangle) figure).drawTriangle(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 6: //Oval/елипса
                     figure = new Oval(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Oval) figure).drawOval(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 7: //Pentagon
                     figure = new Pentagon(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Pentagon) figure).drawPentagon(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 8: //Hexagon
                     figure = new Hexagon(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Hexagon) figure).drawHexagon(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
                 case 9: //Triangle (правоъгълен)
                     figure = new TrianglePrav(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((TrianglePrav) figure).drawTrianglePrav(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
-                case 10: //Izpit
+                default: //Izpit
                     figure = new Izpit(getApplicationContext());
-                    windows[windowPointer].figures.add(figure);
-                    figure.setId(View.generateViewId());
-                    if(windowPointer==0) { CL_Window1.addView(figure); }
-                    else { CL_Window2.addView(figure); }
-                    figure.title = current_selected.title + " Copy";
-                    ((Izpit) figure).drawIzput(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
+                    addFigureToPaneLayout(figure);
+                    figure.drawShape(X, Y, current_selected.getLayoutParams().width, current_selected.getLayoutParams().height, current_selected.fillColor, current_selected.strokeWidth, current_selected.strokeColor);
                     figure.setRotation(current_selected.getRotation());
-                    figure.setOnTouchListener(moveFigure);
-                    figure.setOnClickListener(figureClicker);
                     break;
             }
+
+            figure.title = current_selected.title + " Copy";
+            figure.setOnTouchListener(moveFigure);
+            figure.setOnClickListener(figureClicker);
+
             B_FigSet_CLOSE.performClick(); // чистим и затваряме
         }
     };
+
+    private void addFigureToPaneLayout(Figure figure){
+        windows[windowPointer].figures.add(figure);
+        figure.setId(View.generateViewId());
+        if(windowPointer==0) { //намираме се в прозорец 1
+            CL_Window1.addView(figure);
+        }
+        else { //намираме се в прозорец 2
+            CL_Window2.addView(figure);
+        }
+    }
 
     private void clearFigureSettings_Close(){
         TV_FigSet_Width.setText("Width:");
@@ -1798,6 +1548,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
             }
+            ColorDrawable viewColor = (ColorDrawable) V_Settings_PaneColor.getBackground();
+            int colorId = viewColor.getColor();
+            if(windowPointer == 0){
+                CL_Window1.setBackgroundColor(colorId);
+            } else {
+                CL_Window2.setBackgroundColor(colorId);
+            }
+            updatePreviews();
             IV_Color_NO.performClick();
         }
     };
@@ -1960,7 +1718,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((angelzani.drawingshapes.figures.Point) figure).drawPoint(figureDB.x+figureDB.width/2, figureDB.y+figureDB.height/2, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x+figureDB.width/2, figureDB.y+figureDB.height/2, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -1973,7 +1731,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Line) figure).drawLine(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -1986,7 +1744,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Circle) figure).drawCircle(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -1999,7 +1757,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Rectangle) figure).drawRectangle(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2012,7 +1770,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Triangle) figure).drawTriangle(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2025,7 +1783,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Oval) figure).drawOval(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2038,7 +1796,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Pentagon) figure).drawPentagon(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2051,7 +1809,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Hexagon) figure).drawHexagon(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2064,7 +1822,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((TrianglePrav) figure).drawTrianglePrav(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);
@@ -2077,7 +1835,7 @@ public class MainActivity extends AppCompatActivity {
                             windows[windowPointer].figures.add(figure);
                             figure.title = figureDB.title;
                             figure.type = figureDB.type;
-                            ((Izpit) figure).drawIzput(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
+                            figure.drawShape(figureDB.x, figureDB.y, figureDB.width, figureDB.height, figureDB.fillColor, figureDB.strokeWidth, figureDB.strokeColor);
                             figure.setOnTouchListener(moveFigure);
                             figure.setOnClickListener(figureClicker);
                             figure.setRotation(figureDB.rotation);

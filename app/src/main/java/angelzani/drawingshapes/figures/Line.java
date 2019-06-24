@@ -38,4 +38,11 @@ public class Line extends Figure {
         this.setBackground(gradientDrawable);
     }
 
+    @Override
+    public void drawShape(int int1, int int2, int int3, String str1, int int4, String str2) { }
+
+    @Override
+    public void drawShape(int coordX, int coordY, int lenght, int thickness, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawLine(coordX, coordY, lenght, thickness, fillColor, strokeWidth, strokeColor);
+    }
 }

@@ -84,4 +84,11 @@ public class Triangle extends Figure {
         this.setBackground(bmpDrawable);
     }
 
+    @Override
+    public void drawShape(int coordX, int coordY, int sideLen, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawTriangle(coordX, coordY, sideLen, fillColor, strokeWidth, strokeColor);
+    }
+
+    @Override
+    public void drawShape(int int1, int int2, int int3, int int4, String str1, int int5, String str2) { }
 }

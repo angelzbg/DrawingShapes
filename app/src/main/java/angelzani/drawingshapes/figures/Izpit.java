@@ -82,4 +82,12 @@ public class Izpit extends Figure {
         BitmapDrawable bmpDrawable = new BitmapDrawable(getResources(), bitmap);
         this.setBackground(bmpDrawable);
     }
+
+    @Override
+    public void drawShape(int int1, int int2, int int3, String str1, int int4, String str2) { }
+
+    @Override
+    public void drawShape(int coordX, int coordY, int width, int height, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawIzput(coordX, coordY, width, height, fillColor, strokeWidth, strokeColor);
+    }
 }

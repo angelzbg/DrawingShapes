@@ -3,7 +3,7 @@ package angelzani.drawingshapes.figures;
 import android.content.Context;
 import android.view.View;
 
-public class Figure extends View {
+public abstract class Figure extends View implements FigureInterface{
     public Figure(Context context) {
         super(context);
     }

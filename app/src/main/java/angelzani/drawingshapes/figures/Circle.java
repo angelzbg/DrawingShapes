@@ -11,6 +11,7 @@ public class Circle extends Figure {
         super(context);
         this.type = 3;
     }
+
     // 1 = Point; 2 = Line; 3 = Circle; 4 = Square; 5 = Triangle; 6 = Oval; 7 = Pentagon; 8 = Hexagon; 9 = Triangle Pravougulen
 
     public void drawCircle(int coordX, int coordY, int diametur, String fillColor, int strokeWidth, String strokeColor) {
@@ -38,4 +39,11 @@ public class Circle extends Figure {
         this.setBackground(gradientDrawable);
     }
 
+    @Override
+    public void drawShape(int coordX, int coordY, int diametur, String fillColor, int strokeWidth, String strokeColor) {
+        this.drawCircle(coordX, coordY, diametur, fillColor, strokeWidth, strokeColor);
+    }
+
+    @Override
+    public void drawShape(int int1, int int2, int int3, int int4, String str1, int int5, String str2) { }
 }
